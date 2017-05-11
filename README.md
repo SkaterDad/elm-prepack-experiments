@@ -60,7 +60,7 @@ function makeProgram(flagChecker)
 ```
 Seems to be transformed into this:
 
-```javscript
+```javascript
 function $_5(flagChecker, debugWrap, impl) {
 		return function (flagDecoder) {
 			return function (object, moduleName, debugMetadata) {

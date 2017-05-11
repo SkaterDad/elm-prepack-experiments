@@ -1704,7 +1704,7 @@
 
 		var domNode = _2j(initialVirtualNode, eventNode);
 
-		undefined.appendChild(domNode);
+		document.body.appendChild(domNode);
 		return _3k(domNode, _2h, initialVirtualNode, eventNode);
 	}
 
@@ -4777,7 +4777,7 @@
 		subscriptions: _25
 	};
 	var $2 = undefined;
-	Elm = {
+	window.Elm = {
 		Main: {
 			embed: _2,
 			fullscreen: _51

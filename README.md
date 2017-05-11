@@ -31,6 +31,7 @@ Once you have prepack built:
 7. Open `main.js` and remove the duplicate `function badIndex(index, nestedProblems) { ... }`.
 8. Run `npm run prepack` again.  Should be a success this time unless you're using more features!
 9. Copy the `prepacked.js` file back to your project/example directory.
+10. Fix errors in the prepack output which are preventing the code from running.  See the [commit history of the example files](https://github.com/SkaterDad/elm-prepack-experiments/commit/5785de8d63e8690138ddf26a7f4e1af3ff36ba8c) for more info.
 
 # Some notes
 Some higher order functions (ie. functions returning other functions) get squashed/eliminated.  For example:

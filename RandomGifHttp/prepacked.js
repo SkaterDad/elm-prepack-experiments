@@ -3591,7 +3591,7 @@
 
 		var domNode = _5P(initialVirtualNode, eventNode);
 
-		undefined.appendChild(domNode);
+		document.body.appendChild(domNode);
 		return _6y(domNode, _5n, initialVirtualNode, eventNode);
 	}
 
@@ -6806,7 +6806,7 @@
 	var $2 = undefined;
 	_4X.self = _4T;
 	_54.self = _50;
-	Elm = {
+	window.Elm = {
 		Main: {
 			embed: _2,
 			fullscreen: _84

@@ -99,3 +99,13 @@ var _2i = {
 	text: "Hello, World!"
 };
 ```
+
+### Uncompressed, un-minified JS file stats:
+
+HelloWorld example
+- Before = 182 KB (7832 lines)
+- After = 96 KB (4788 lines)
+
+RandomGifHttp example
+- Before = 223 KB (9183 lines)
+- After = 137 KB (6817 lines)

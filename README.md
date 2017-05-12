@@ -118,7 +118,7 @@ RandomGifHttp example
 - After = 137 KB (6817 lines)
 
 ### Compressed & Minified File Stats
-These are interested to look at, but since `prepack` is trying to optimize for performance, not size, they're not necessarily relevant. There may be cases when it generates longer code in order to get better performance (not with these examples, though).
+These are interesting to look at, but since `prepack` is trying to optimize for performance, not size, they're not necessarily relevant. There may be cases when it generates longer code in order to get better performance (not with these examples, though).
 
 HelloWorld|Raw|Minified|Min+Gzip
 ----------|---|--------|--------

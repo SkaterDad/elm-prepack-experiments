@@ -16,22 +16,23 @@ Some ideas:
 - Benchmarks comparing the 'raw' elm build vs prepacked.  Elm is already quite fast, so this would be very interesting!
 
 # How was this done?
-As of this writing (morning of 5/11/2017), the version of `prepack` on npm was missing support for some features (like setTimeout), so it had to be built from source.
+First you need to install `prepack` via npm.  It must be version 0.2.2+.
+```
+npm install prepack -g
+```
 
-Go to the [Prepack repo on Github](https://github.com/facebook/prepack) and follow their instructions to clone/install/build.
+Note:  Prepack is still in active developement.  If you need the latest & greatest, go to the [Prepack repo on Github](https://github.com/facebook/prepack) and follow their instructions to clone/install/build.
 
 Once you have prepack built:
 
-1. In the `prepack` directory, open `package.json` and modify the `prepack` script. `"prepack": "node lib/prepack-cli.js main.js --out prepacked.js"`.  I'm sure there are smarter ways of doing this, but it makes the rest of the commands simpler.
-2. Use `elm-make` to compile your desired Elm code to a JS file.  I stuck with `elm-make main.elm --output main.js` for these examples to make things easier.
-3. Add `window.Elm.Main.fullscreen();` to the bottom of your newly built `main.js`.  Since prepack partially executes the code, it couldn't hurt to try this?
-4. Copy that JS file into your prepack directory
-5. Run `npm run prepack`
-6. Observe a relatively friendly error message, telling you: `badIndex already declared` with a line number.  Turns out elm-make duplicated a function...
-7. Open `main.js` and remove the duplicate `function badIndex(index, nestedProblems) { ... }`.
-8. Run `npm run prepack` again.  Should be a success this time unless you're using more features!
+1. Use `elm-make` to compile your desired Elm code to a JS file.  I stuck with `elm-make main.elm --output main.js` for these examples to make things easier.
+2. Add `window.Elm.Main.fullscreen();` to the bottom of your newly built `main.js`.  Since prepack partially executes the code, it couldn't hurt to try this?
+3. Run `prepack main.js --out prepacked.js` (or the names you prefer)
+4. Observe a relatively friendly error message, telling you: `badIndex already declared` with a line number.  Turns out elm-make duplicated a function...
+5. Open `main.js` and remove the duplicate `function badIndex(index, nestedProblems) { ... }`.
+8. Run `prepack main.js --out prepacked.js` again.  Should be a success this time unless you're using more features!
 9. Copy the `prepacked.js` file back to your project/example directory.
-10. Fix errors in the prepack output which are preventing the code from running.  See the [commit history of the example files](https://github.com/SkaterDad/elm-prepack-experiments/commit/5785de8d63e8690138ddf26a7f4e1af3ff36ba8c) for more info.
+10. Fix errors in the prepack output which are preventing the code from running (check browser console logs or let the debugger pause on exceptions).  See the [commit history of the example files](https://github.com/SkaterDad/elm-prepack-experiments/commit/5785de8d63e8690138ddf26a7f4e1af3ff36ba8c) for more info.
 
 # Some notes
 Some higher order functions (ie. functions returning other functions) get squashed/eliminated.  For example:

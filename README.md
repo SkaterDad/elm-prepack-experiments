@@ -7,6 +7,9 @@ This folder contains a basic "Hello, World!" elm program.  It was copied from th
 ## RandomGifHttp
 This folder contains the 'Http' example from Elm-lang.org, which fetches random Gifs of cats over Http.
 
+## RealWorldSPA
+This folder contains Richard Feldman's elm-spa-example, which implements the RealWorldApp specification.  This folder doesn't contain a prepacked verison yet due to errors.  Up for a challenge?
+
 # Contributing
 Pull requests are very welcome!
 

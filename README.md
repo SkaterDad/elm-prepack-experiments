@@ -33,9 +33,16 @@ Once you have prepack built:
 3. Run `prepack main.js --out prepacked.js` (or the names you prefer)
 4. Observe a relatively friendly error message, telling you: `badIndex already declared` with a line number.  Turns out elm-make duplicated a function...
 5. Open `main.js` and remove the duplicate `function badIndex(index, nestedProblems) { ... }`.
-8. Run `prepack main.js --out prepacked.js` again.  Should be a success this time unless you're using more features!
-9. Copy the `prepacked.js` file back to your project/example directory.
-10. Fix errors in the prepack output which are preventing the code from running (check browser console logs or let the debugger pause on exceptions).  See the [commit history of the example files](https://github.com/SkaterDad/elm-prepack-experiments/commit/5785de8d63e8690138ddf26a7f4e1af3ff36ba8c) for more info.
+6. Run `prepack main.js --out prepacked.js` again.  Should be a success this time unless you're using more features!
+7. Copy the `prepacked.js` file back to your project/example directory.
+8. Fix errors in the prepack output which are preventing the code from running (check browser console logs or let the debugger pause on exceptions).  See the [commit history of the example files](https://github.com/SkaterDad/elm-prepack-experiments/commit/5785de8d63e8690138ddf26a7f4e1af3ff36ba8c) for more info.
+9. Minify & gzip the JS files.  I used Uglify (`npm install uglify-js -g`) and gzip.
+	```
+	uglify main.js -c -m -o main.uglify.js
+	uglifyjs prepacked.js -c -m -o prepacked.uglify.js
+	gzip -k main.uglify.js
+	gzip -k prepacked.uglify.js
+	```
 
 # Some notes
 Some higher order functions (ie. functions returning other functions) get squashed/eliminated.  For example:
@@ -109,3 +116,15 @@ HelloWorld example
 RandomGifHttp example
 - Before = 223 KB (9183 lines)
 - After = 137 KB (6817 lines)
+
+### Compressed & Minified File Stats
+
+HelloWorld|Raw|Minified|Min+Gzip
+----------|---|--------|--------
+Elm build|175 KB|66 KB|20 KB
+Prepacked|92 KB|47 KB|15 KB
+
+RandomGifHttp|Raw|Minified|Min+Gzip
+----------|---|--------|--------
+Elm build|214 KB|74 KB|23 KB
+Prepacked|130 KB|67 KB|21 KB

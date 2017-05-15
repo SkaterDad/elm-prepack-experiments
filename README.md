@@ -129,3 +129,46 @@ RandomGifHttp|Raw|Minified|Min+Gzip
 ----------|---|--------|--------
 Elm build|214 KB|74 KB|23 KB
 Prepacked|130 KB|67 KB|21 KB
+
+### Benchmark Results
+To see if `prepack` makes a significant difference in runtime performance, I copied the [TodoMVC benchmarks from Evan](https://github.com/evancz/react-angular-ember-elm-performance-comparison) and ran the Elm implementaitons through `prepack`.
+
+The files can be found in the `Benchmarks` folder of this repo.
+
+On the machine I ran these tests on (Windows 7, Intel Core i5-4590), I saw no significant performance benefit to running the compiled `elm` code through `prepack`.  On the "optimized" implementations, where `Html.lazy` is utilized, the prepack versions seem to perform slightly worse w/ 10x CPU slowdown.
+
+IE11
+
+Implementation|Run 1
+--------------|-----
+Elm 0.17|5944 ms
+Prepacked Elm 0.17|5942 ms
+Elm 0.17 (optimized)|4274 ms
+Prepacked Elm 0.17 (optimized)|4244 ms
+
+Chrome 58.0.3029.96 (64-bit) - Full CPU Speed
+
+Implementation|Run 1|Run 2|Run 3
+--------------|-----|-----|-----
+Elm 0.17|1993 ms|2012 ms|2009 ms
+Prepacked Elm 0.17|2008 ms|2003 ms|1992 ms
+Elm 0.17 (optimized)|1980 ms|1972 ms|1981 ms
+Prepacked Elm 0.17 (optimized)|1992 ms|1979 ms|1978 ms
+
+Chrome 58.0.3029.96 (64-bit) - 5x CPU Slowdown
+
+Implementation|Run 1|Run 2|Run 3
+--------------|-----|-----|-----
+Elm 0.17|5379 ms|5397 ms|5540 ms
+Prepacked Elm 0.17|5424 ms|5491 ms|5391 ms
+Elm 0.17 (optimized)|3511 ms|3608 ms|3528 ms
+Prepacked Elm 0.17 (optimized)|3477 ms|3642 ms|3648 ms
+
+Chrome 58.0.3029.96 (64-bit) - 10x CPU Slowdown
+
+Implementation|Run 1|Run 2
+--------------|-----|-----
+Elm 0.17|12782 ms|12180 ms
+Prepacked Elm 0.17|12397 ms|11937 ms
+Elm 0.17 (optimized)|7628 ms|7272 ms
+Prepacked Elm 0.17 (optimized)|7742 ms|8279 ms

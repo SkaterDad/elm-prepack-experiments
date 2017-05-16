@@ -38,7 +38,7 @@ Once you have prepack built:
 8. Fix errors in the prepack output which are preventing the code from running (check browser console logs or let the debugger pause on exceptions).  See the [commit history of the example files](https://github.com/SkaterDad/elm-prepack-experiments/commit/5785de8d63e8690138ddf26a7f4e1af3ff36ba8c) for more info.
 9. Minify & gzip the JS files.  I used Uglify (`npm install uglify-js -g`) and gzip.
 	```
-	uglify main.js -c -m -o main.uglify.js
+	uglifyjs main.js -c -m -o main.uglify.js
 	uglifyjs prepacked.js -c -m -o prepacked.uglify.js
 	gzip -k main.uglify.js
 	gzip -k prepacked.uglify.js
@@ -130,7 +130,9 @@ RandomGifHttp|Raw|Minified|Min+Gzip
 Elm build|214 KB|74 KB|23 KB
 Prepacked|130 KB|67 KB|21 KB
 
-### Benchmark Results
+
+
+### TodoMVC Benchmark Results
 To see if `prepack` makes a significant difference in runtime performance, I copied the [TodoMVC benchmarks from Evan](https://github.com/evancz/react-angular-ember-elm-performance-comparison) and ran the Elm implementaitons through `prepack`.
 
 The files can be found in the `Benchmarks` folder of this repo.
@@ -172,3 +174,28 @@ Elm 0.17|12782 ms|12180 ms
 Prepacked Elm 0.17|12397 ms|11937 ms
 Elm 0.17 (optimized)|7628 ms|7272 ms
 Prepacked Elm 0.17 (optimized)|7742 ms|8279 ms
+
+### TodoMVC Page Load Performance
+To see if the prepacked version affected page load performance, I used Chrome Dev Tools' Performance tab to profile page reloads.
+
+As with the file size metrics posted before, I used uglifyjs to minify both version of the "optimized" TodoMVC.
+
+I expected to see some small wins for `prepack` here, since the minified file sizes are smaller.  In my opinion, the results aren't significantly different, especially if you account for the variability in numbers that Dev Tools measured (the 2 versions traded back & forth for "best" results).  Overall it does seem the "scripting" time is lower with the prepacked file, but that's likely due to some dead code elimination that uglify wasn't capapble of.  Less code = less parse time, so no news here!
+
+Full CPU Speed - Averages of 4 runs each
+
+Metric|Original (Min)|Prepacked (Min)
+------|--------------|---------------
+Loading|3.2 ms|2.85 ms
+Scripting|45.75 ms|30.73 ms
+Rendering|4.2 ms|7.15 ms
+Painting|0.75 ms|0.475 ms
+
+10x CPU Slowdown - Averages of 5 runs each
+
+Metric|Original (Min)|Prepacked (Min)
+------|--------------|---------------
+Loading|30.14 ms|25.36 ms
+Scripting|286.74 ms|264.1 ms
+Rendering|25.48 ms|28.6 ms
+Painting|2.36 ms|3.28 ms
